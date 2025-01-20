@@ -7,8 +7,8 @@ export let options = {
             executor: 'ramping-vus',
             startVUs: 0,
             stages: [
-                { duration: '10s', target: 5 },   // ramp up to 5 users
-                { duration: '10s', target: 10 },  // then up to 10
+                { duration: '10s', target: 1 },   // ramp up to 5 users
+                { duration: '10s', target: 2 },  // then up to 10
                 { duration: '10s', target: 0 },   // then back down
             ],
         },
@@ -17,7 +17,9 @@ export let options = {
 
 export default function () {
     createChatSession();
-    sendTextMessage();
+    for (let i = 0; i < 10; i++) { // Corrected syntax
+        sendTextMessage();
+    }
     uploadFileMessage();
     sleep(2);
 }
