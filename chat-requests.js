@@ -1,7 +1,7 @@
 import http from 'k6/http';
 import { check, sleep} from 'k6';
 
-const BASE_URL     = __ENV.BASE_URL     || 'http://localhost:8080';
+const BASE_URL     = __ENV.BASE_URL     || 'http://localhost:8081';
 const PROJECT_ID   = __ENV.PROJECT_ID   || 'some-project-id';
 const TASK_ID      = __ENV.TASK_ID      || 'some-task-id';
 const SESSION_ID   = __ENV.SESSION_ID   || 'some-session-id';
@@ -47,10 +47,7 @@ export function uploadFileMessage() {
     const url = `${BASE_URL}/api/v1/projects/${PROJECT_ID}/tasks/${TASK_ID}/chats/${SESSION_ID}/messages/upload`;
 
     // Generate 1 MB of dummy text (1,024 * 1024 = 1 MB).
-    // Each character is a byte when used in this manner.
     const oneMB = new Array(1024 * 1024).fill('A').join('');
-
-    // Wrap it in the file() helper so k6 does multipart boundaries, etc.
     let fileData = http.file(
         oneMB,        // 1 MB of "A"
         'large-file.txt', // file name
@@ -60,7 +57,6 @@ export function uploadFileMessage() {
     let params = {
         headers: {
             'Cookie': COOKIE_VALUE,
-            // Don't set Content-Type manually; k6 sets multipart boundaries automatically
         },
     };
 

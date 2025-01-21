@@ -1,5 +1,5 @@
 import { sleep } from 'k6';
-import { createChatSession, sendTextMessage, uploadFileMessage } from './requests.js';
+import { createChatSession, sendTextMessage, uploadFileMessage } from './chat-requests.js';
 
 export let options = {
     scenarios: {
